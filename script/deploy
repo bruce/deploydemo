@@ -1,0 +1,13 @@
+#!/bin/bash
+
+# Script that simulates a deployment to DEPLOY_STAGE using
+# key DEPLOY_KEY.
+
+set -e
+
+: "${DEPLOY_STAGE:?Need to set DEPLOY_STAGE}"
+: "${DEPLOY_KEY:?Need to set DEPLOY_KEY}"
+
+now=$(date +%Y-%m-%dT%H:%M:%S%z)
+
+echo "\"Deployed\" stage ${DEPLOY_STAGE} at ${now} using key ${DEPLOY_KEY}"

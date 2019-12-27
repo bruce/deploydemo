@@ -1,0 +1,8 @@
+#!/bin/bash
+
+# Script that exits based on the value of the EXIT_CODE environment variable;
+# defaulting to 0.
+
+exit_code=${EXIT_CODE:-0}
+
+exit $exit_code
