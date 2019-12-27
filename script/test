@@ -5,4 +5,6 @@
 
 exit_code=${EXIT_CODE:-0}
 
+echo "TEST RESULT: ${exit_code}"
+
 exit $exit_code
