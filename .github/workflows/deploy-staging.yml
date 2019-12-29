@@ -1,0 +1,21 @@
+name: Deploy to Staging
+
+on:
+  pull_request:
+    branches:
+    - master
+  push:
+    branches:
+    - master
+
+jobs:
+  deploy:
+    if: github.event.pull_request.merged
+    runs-on: ubuntu-latest
+    steps:
+    - name: Deployment
+      env:
+        DEPLOY_STAGE: staging
+        DEPLOY_KEY: "{{ github.secrets.STAGING_DEPLOY_KEY }}"
+      run: |
+        script/deploy
