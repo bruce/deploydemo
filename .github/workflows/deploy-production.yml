@@ -1,13 +1,12 @@
 name: Deploy to Production
 
 on:
-  pull_request:
+  push:
     branches:
     - production
 
 jobs:
   deploy:
-    if: github.event.pull_request.merged
     runs-on: ubuntu-latest
     steps:
     - name: Deployment
