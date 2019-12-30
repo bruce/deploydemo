@@ -8,6 +8,28 @@ set -e
 : "${DEPLOY_STAGE:?Need to set DEPLOY_STAGE}"
 : "${DEPLOY_KEY:?Need to set DEPLOY_KEY}"
 
-now=$(date +%Y-%m-%dT%H:%M:%S%z)
+# Taken from: https://github.com/jcgoble3/gitstuff/blob/master/gitprompt.sh
+git_status() {
+  # Outputs a series of indicators based on the status of the
+  # working directory:
+  # + changes are staged and ready to commit
+  # ! unstaged changes are present
+  # ? untracked files are present
+  # S changes have been stashed
+  # P local commits need to be pushed to the remote
+  local status="$(git status --porcelain 2>/dev/null)"
+  local output=''
+  [[ -n $(egrep '^[MADRC]' <<<"$status") ]] && output="$output+"
+  [[ -n $(egrep '^.[MD]' <<<"$status") ]] && output="$output!"
+  [[ -n $(egrep '^\?\?' <<<"$status") ]] && output="$output?"
+  [[ -n $(git stash list) ]] && output="${output}S"
+  [[ -n $(git log --branches --not --remotes) ]] && output="${output}P"
+  [[ -n $output ]] && output="|$output"  # separate from branch name
+  echo $output
+}
 
-echo "\"Deployed\" stage ${DEPLOY_STAGE} at ${now} using key ${DEPLOY_KEY}"
+now=$(date +%Y-%m-%dT%H:%M:%S%z)
+sha=$(git rev-parse --short HEAD)
+status=$(git_status)
+
+echo "\"Deployed\" ${sha}${status} to ${DEPLOY_STAGE} at ${now}"
