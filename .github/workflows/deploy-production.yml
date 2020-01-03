@@ -10,9 +10,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
+    - name: Precheck
+      run: script/test
     - name: Deployment
       env:
         DEPLOY_STAGE: production
         DEPLOY_KEY: ${{ secrets.PRODUCTION_DEPLOY_KEY }}
-      run: |
-        script/deploy
+      run: script/deploy
