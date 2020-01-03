@@ -4,9 +4,16 @@ A simple example showing multi-stage deployments using GitHub Actions.
 
 ## Just an example
 
-Note that the testing and deployment logic present in `script/test` and
-`script/deploy` are merely illustrative and need to be modified to do anything
-meaningful.
+The testing and deployment logic present in `script/test` and `script/deploy`
+are merely illustrative and need to be modified to do anything meaningful.
+
+This example uses the `master` branch to deploy staging and a `production`
+branch to deploy production. These conventions can be changed to use any refs
+you'd like; just change the `on` settings in `.github/workflows/deploy-*.yml`.
+
+Various repository settings (specifically those related to branch protection and
+status check enforcement) should be set as well; some suggestions are made
+below.
 
 ## Development Flow
 
